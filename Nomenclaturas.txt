@@ -1,0 +1,5 @@
+Common -> usada para armazenar código reutilizável (armazenar funcionalidades em comum) -> exemplos: Metodos/Funções para manipular datas,strings, expressões matemática, constantes e enumeradores, modelos comuns, interfaces comuns, exceções comuns
+
+Data -> Armazenar informações gerais sobre dados -> exemplos -> contexto banco de dados, repositórios, entidades de modelo, (pode haver pasta migrations), seeders e populacao de dados (que é quando ele preenche o banco de dados com alguns dados padrões ao iniciar), configurações de conexão, stored procedures e queries personalizados
+
+Models -> modelos de dados ou entidades, enums, arquivos de configuração, modelos de consulta, validação de dados, modelos de visão, modelos de resposta etc.

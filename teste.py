@@ -1,90 +1,47 @@
-from time import sleep
+# matriz com ponderamento
 
-caminhos = dict()
-
-ja_visitados = []
-forca = int(input())
-posicaoInicial = tuple(map(int,input().split(' ')))
-proximos_na_fila = []
-proximos_na_fila.append(posicaoInicial)
-caminhos[posicaoInicial] = None
 matriz = [
-    ['.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.'],
-    ['.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.'],
-    ['.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.'],
-    ['.','.','.','.','.','.','#','.','.','.','.','.','.','.','.','.'],
-    ['.','.','.','.','.','.','#','.','.','.','.','.','.','.','.','.'],
-    ['.','.','.','.','.','.','#','.','.','.','.','.','.','.','.','.'],
-    ['.','.','.','.','.','.','#','.','.','.','.','.','.','.','.','.'],
-    ['.','.','.','.','.','.','#','K','.','.','.','.','.','.','.','.'],
-['.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.'],
-['.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.'],
-['.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.'],
-['.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.'],
-['.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.'],
-['.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.'],
-['.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.'],
-['.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.'],
+    ['0', '99999999999999',  '0',   '0',   '1',   '0','0','0'],
+    ['0',  '10'          ,   '0',   '0',   '500', '0','0','0'],
+    ['1', '100',             '0',   '0',   '500', '0','0','0'],
+    ['0',  '0',              '0',   '0',   '500', '0','0','0'],
+    ['300','300',            '100','500',  '0',   '0','0','0'],
+    ['0',  '0',              '0',   '0',   '0',   '0','0','0'],
+    ['0',  '0',              '0',   '0',   '0',   '0','0','0'],
+    ['0',  '0',              '0',   '0',   '0',   '0','0','0'],
 ]
-Objetivo = tuple()
-for linha in range(len(matriz)):
-    for coluna in range(len(matriz[0])):
-        if matriz[linha][coluna] == 'K':
-            Objetivo = (linha,coluna)
-            break
 
+obj = (7,7)
+inicio = (0,0)
+caminho = dict()
+caminho[inicio] = None
+proximosNaFila = [(inicio[0],inicio[1],0)]
+jaAnalisados = [inicio]
 
+def alterarMatriz(posicao):
 
-def adicionarVizinhosNaFila(posicaoAtual : tuple):
-    for proximos_x in [-1,0,1]:
-        for proximos_y in [-1,0,1]:
-            if posicaoAtual[0] + proximos_x >= 0 and posicaoAtual[0] + proximos_x < len(matriz[0]) and posicaoAtual[1] + proximos_y >= 0 and posicaoAtual[1]  + proximos_y < len(matriz):
-                if (posicaoAtual[0] + proximos_x, posicaoAtual[1] + proximos_y) not in ja_visitados and (posicaoAtual[0] + proximos_x, posicaoAtual[1] + proximos_y) not in proximos_na_fila and matriz[posicaoAtual[0] + proximos_x][posicaoAtual[1] + proximos_y] != "#" and abs(proximos_x) != abs(proximos_y) :
-                    proximos_na_fila.append((posicaoAtual[0] + proximos_x, posicaoAtual[1] + proximos_y))
-                    caminhos[(posicaoAtual[0] + proximos_x, posicaoAtual[1] + proximos_y)] = posicaoAtual
+    matriz[posicao[0]][posicao[1]] = 'A'
 
+def adicionarVizinhos(posicao_custo):
+    if not any(posicao_custo == (prioridade[0],prioridade[1]) for prioridade in proximosNaFila):
+        for x in [-1,0,1]:
+            for y in [-1,0,1]:
+                if posicao_custo[0] + x >= 0 and posicao_custo[0] + x < len(matriz[0]) and posicao_custo[1] + y >= 0 and posicao_custo[1] + y < len(matriz) and abs(x) != abs(y):
+                    if (posicao_custo[0] + x, posicao_custo[1] + y ) not in jaAnalisados and (posicao_custo[0] + x, posicao_custo[1] + y, int(  matriz[posicao_custo[0]+x]  [posicao_custo[1]+ y] ) ) not in proximosNaFila:
+                        proximosNaFila.append((posicao_custo[0] + x,posicao_custo[1] + y,( int(  matriz[posicao_custo[0]+x]  [posicao_custo[1]+ y] ) + int(matriz[posicao_custo[0]][posicao_custo[1]]) )  ) )
 
-
-
-for item in proximos_na_fila:
-
-    matriz[item[0]][item[1]] = 'A'
-
+contador = 0
+while proximosNaFila != []:
+    print(proximosNaFila)
+    posicoes_custo = (proximosNaFila[0][0],proximosNaFila[0][1],int(matriz[proximosNaFila[0][0]][proximosNaFila[0][1]]))
+    jaAnalisados.append((posicoes_custo[0], posicoes_custo[1]))
+    adicionarVizinhos(posicoes_custo)
+    alterarMatriz(posicoes_custo)
+    proximosNaFila.pop(0)
+    proximosNaFila.sort(key= lambda x : x[2])
     for linha in matriz:
         print(linha)
-    if item == Objetivo:
-        resposta = []
-        while True:
-            if caminhos[item] == None:
-                break
-            else:
-                resposta.append(item)
-                item =  caminhos[item]
-        print("O minimo de passos para chegar até o objetivo é:", len(resposta))
-        # print("Chegou =D")
-        # print(caminhos)
+    if (posicoes_custo[0],posicoes_custo[1]) == obj:
+        print("FIM")
         break
-    adicionarVizinhosNaFila(item)
-    # sleep(1)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

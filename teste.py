@@ -29,7 +29,7 @@ def adicionarVizinhos(posicao_custo):
                 if posicao_custo[0] + x >= 0 and posicao_custo[0] + x < len(matriz[0]) and posicao_custo[1] + y >= 0 and posicao_custo[1] + y < len(matriz) and abs(x) != abs(y):
                     if (posicao_custo[0] + x, posicao_custo[1] + y ) not in jaAnalisados and (posicao_custo[0] + x, posicao_custo[1] + y, int(  matriz[posicao_custo[0]+x]  [posicao_custo[1]+ y] ) ) not in proximosNaFila:
                         proximosNaFila.append((posicao_custo[0] + x,posicao_custo[1] + y,( int(  matriz[posicao_custo[0]+x]  [posicao_custo[1]+ y] ) + int(matriz[posicao_custo[0]][posicao_custo[1]]) )  ) )
-
+                        caminho[(posicao_custo[0] + x,posicao_custo[1] + y)] = (posicao_custo[0],posicao_custo[1])
 contador = 0
 while proximosNaFila != []:
     print(proximosNaFila)
@@ -39,9 +39,18 @@ while proximosNaFila != []:
     alterarMatriz(posicoes_custo)
     proximosNaFila.pop(0)
     proximosNaFila.sort(key= lambda x : x[2])
+
     for linha in matriz:
         print(linha)
     if (posicoes_custo[0],posicoes_custo[1]) == obj:
-        print("FIM")
+        print("FIM...PRINTANDO CAMINHO")
+        res = []
+        pesoTotal = 0
+        while True:
+            if caminho[obj] == None:
+                print(list(reversed(res)))
+                break
+            else:
+                res.append(caminho[obj])
+                obj = caminho[obj]
         break
-

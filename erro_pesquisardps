@@ -22,3 +22,9 @@ Unhandled exception. System.IO.IOException: The configured user limit (128) on t
    at Microsoft.Extensions.Hosting.Host.CreateApplicationBuilder(String[] args)
    at Program.Main(String[] args) in /home/dev/Audittei/Backend/AdtBackend/Audittei.AplicarCenarios/Program.cs:line 9
    at Program.<Main>(String[] args)
+
+
+
+
+
+coursera

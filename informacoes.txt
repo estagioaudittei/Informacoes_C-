@@ -5,3 +5,6 @@ UseIdentifyByDefayltColumn<T>() -> permite configurar a coluna usando u tipo esp
 UseIdentifyAlwaysColumn() -> define que coluna usará geração de identidade obrigatória e não aceitará outros argumentos mesmo se passados 
 
 UseIdentifyColumn() -> pega da configuração do banco de dados (comportamento padrão especificado, por padrão caso não declarado será igual a IdentifyByDefaultColumn() ) 
+
+
+sudo strings /sys/firmware/acpi/tables/MSDM 

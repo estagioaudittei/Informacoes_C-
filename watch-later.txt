@@ -1,1 +1,6 @@
 https://www.youtube.com/watch?v=Jms3C-J-m2M&list=PLdo4fOcmZ0oWoazjhXQzBKMrFuArxpW80&index=5
+
+
+UPDATE public.usuario
+SET usuario='aao', senha='oG4W2lIbY2grJ6R0qdjSJw==',  nome_completo='Alexandre Oliveira' 
+WHERE  usuario='acb';
